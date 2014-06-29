@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+    <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/nicknameTitle"
+            android:id="@+id/nicknameTitle"
+            android:fontFamily="sans-serif-thin"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/nicknameTV"
+            android:layout_below="@+id/nicknameTitle"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="@dimen/swipe_details_left_margin"
+            android:paddingBottom="@dimen/swipe_details_bottom_padding" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/uptimeTitle"
+            android:fontFamily="sans-serif-thin"
+            android:id="@+id/uptimeTitle"
+            android:layout_below="@+id/nicknameTV"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/uptimeTV"
+            android:layout_below="@+id/uptimeTitle"
+            android:layout_alignLeft="@+id/uptimeTitle"
+            android:layout_alignStart="@+id/uptimeTitle"
+            android:paddingLeft="@dimen/swipe_details_left_margin"
+            android:paddingBottom="@dimen/swipe_details_bottom_padding"
+            android:singleLine="false" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/runningTitle"
+            android:id="@+id/runningTitle"
+            android:fontFamily="sans-serif-thin"
+            android:layout_below="@+id/uptimeTV"
+            android:layout_alignLeft="@+id/uptimeTV"
+            android:layout_alignStart="@+id/uptimeTV" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/runningTV"
+            android:layout_below="@+id/runningTitle"
+            android:layout_alignLeft="@+id/runningTitle"
+            android:layout_alignStart="@+id/runningTitle"
+            android:paddingLeft="@dimen/swipe_details_left_margin"
+            android:paddingBottom="@dimen/swipe_details_bottom_padding" />
+
+        <GridLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_below="@+id/runningTV"
+            android:id="@+id/gridFlags"
+            android:paddingBottom="@dimen/swipe_details_bottom_padding"
+            android:columnCount="8"
+            android:layout_centerHorizontal="true">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/authorityImage"
+                android:src="@drawable/ic_directory_authority"
+                />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/badExitImage"
+                android:src="@drawable/ic_bad_exit"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/badDirectoryImage"
+                android:src="@drawable/ic_bad_exit"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/exitImage"
+                android:src="@drawable/ic_exit"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/fastImage"
+                android:src="@drawable/ic_fast"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/guardImage"
+                android:src="@drawable/ic_guard"
+                />
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/hsDirImage"
+                android:src="@drawable/ic_directory"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/namedImage"
+                android:src="@drawable/ic_named"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/stableImage"
+                android:src="@drawable/ic_stable"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/runningImage"
+                android:src="@drawable/ic_running"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/unnamedImage"
+                android:src="@drawable/ic_unnamed"
+                />
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/validImage"
+                android:src="@drawable/ic_valid"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/v2DirImage"
+                android:src="@drawable/ic_v2"
+                />
+        </GridLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/orAddressTitle"
+            android:fontFamily="sans-serif-thin"
+            android:id="@+id/orAddressTitle"
+            android:layout_below="@+id/gridFlags"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/oraddressTV"
+            android:layout_below="@+id/orAddressTitle"
+            android:layout_alignLeft="@+id/orAddressTitle"
+            android:layout_alignStart="@+id/orAddressTitle"
+            android:paddingLeft="@dimen/swipe_details_left_margin"
+            android:paddingBottom="@dimen/swipe_details_bottom_padding" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/contactTitle"
+            android:id="@+id/contactTitle"
+            android:fontFamily="sans-serif-thin"
+            android:layout_below="@+id/oraddressTV"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/contactTV"
+            android:layout_below="@+id/contactTitle"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:paddingLeft="@dimen/swipe_details_left_margin"
+            android:textIsSelectable="true" />
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar"
+            android:indeterminateOnly="true"
+            android:layout_centerInParent="true" />
+
+    </RelativeLayout>
+</ScrollView>

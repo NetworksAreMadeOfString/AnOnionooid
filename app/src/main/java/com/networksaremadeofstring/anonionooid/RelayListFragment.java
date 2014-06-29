@@ -1,13 +1,26 @@
 package com.networksaremadeofstring.anonionooid;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.ListFragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.GridView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 
+import com.networksaremadeofstring.anonionooid.API.Ooo;
+import com.networksaremadeofstring.anonionooid.API.Relay;
+import com.networksaremadeofstring.anonionooid.API.Relays;
+import com.networksaremadeofstring.anonionooid.Adapters.RelaysAdapater;
 import com.networksaremadeofstring.anonionooid.dummy.DummyContent;
 
 /**
@@ -19,7 +32,13 @@ import com.networksaremadeofstring.anonionooid.dummy.DummyContent;
  * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.
  */
-public class RelayListFragment extends ListFragment {
+public class RelayListFragment extends Fragment
+{
+
+    private Ooo API;
+    private RelaysAdapater relaysAdapater;
+    private GridView gridView;
+    private ProgressBar progressBar;
 
     /**
      * The serialization (saved instance state) Bundle key representing the
@@ -43,7 +62,8 @@ public class RelayListFragment extends ListFragment {
      * implement. This mechanism allows activities to be notified of item
      * selections.
      */
-    public interface Callbacks {
+    public interface Callbacks
+    {
         /**
          * Callback for when an item has been selected.
          */
@@ -68,26 +88,72 @@ public class RelayListFragment extends ListFragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
 
+        API = new Ooo();
+
+
         // TODO: replace with a real list adapter.
-        setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(
+        /*setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(
                 getActivity(),
                 android.R.layout.simple_list_item_activated_1,
                 android.R.id.text1,
-                DummyContent.ITEMS));
+                DummyContent.ITEMS));*/
+
+        //if(savedInstanceState == null)
+        //{
+            relaysAdapater = new RelaysAdapater(getActivity());
+            new AsyncTask<Void, Void, Relays>() {
+                @Override
+                protected Relays doInBackground(Void... params) {
+                    try {
+                        return API.getTopTen();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        return null;
+                    }
+                }
+
+                @Override
+                protected void onPostExecute(Relays relays) {
+                    relaysAdapater.updateRelayList(relays);
+                    gridView.setAdapter(relaysAdapater);
+                    gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Relay relay = (Relay) relaysAdapater.getItem(position);
+                            mCallbacks.onItemSelected(relay.Fingerprint);
+                        }
+                    });
+                    progressBar.setVisibility(View.GONE);
+                }
+            }.execute(null, null, null);
+        //}
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
+        View rootView = inflater.inflate(R.layout.fragment_relays_grid, container, false);
+
+        gridView = (GridView) rootView.findViewById(R.id.gridView);
+        progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar);
+
+        return rootView;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState)
+    {
         super.onViewCreated(view, savedInstanceState);
 
         // Restore the previously serialized activated item position.
-        if (savedInstanceState != null
+        /*if (savedInstanceState != null
                 && savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
             setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION));
-        }
+        }*/
     }
 
     @Override
@@ -95,7 +161,8 @@ public class RelayListFragment extends ListFragment {
         super.onAttach(activity);
 
         // Activities containing this fragment must implement its callbacks.
-        if (!(activity instanceof Callbacks)) {
+        if (!(activity instanceof Callbacks))
+        {
             throw new IllegalStateException("Activity must implement fragment's callbacks.");
         }
 
@@ -110,19 +177,21 @@ public class RelayListFragment extends ListFragment {
         mCallbacks = sDummyCallbacks;
     }
 
-    @Override
+    /*@Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
 
         // Notify the active callbacks interface (the activity, if the
         // fragment is attached to one) that an item has been selected.
         mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
-    }
+    }*/
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(Bundle outState)
+    {
         super.onSaveInstanceState(outState);
-        if (mActivatedPosition != ListView.INVALID_POSITION) {
+        if (mActivatedPosition != ListView.INVALID_POSITION)
+        {
             // Serialize and persist the activated item position.
             outState.putInt(STATE_ACTIVATED_POSITION, mActivatedPosition);
         }
@@ -132,7 +201,7 @@ public class RelayListFragment extends ListFragment {
      * Turns on activate-on-click mode. When this mode is on, list items will be
      * given the 'activated' state when touched.
      */
-    public void setActivateOnItemClick(boolean activateOnItemClick) {
+    /*public void setActivateOnItemClick(boolean activateOnItemClick) {
         // When setting CHOICE_MODE_SINGLE, ListView will automatically
         // give items the 'activated' state when touched.
         getListView().setChoiceMode(activateOnItemClick
@@ -148,5 +217,5 @@ public class RelayListFragment extends ListFragment {
         }
 
         mActivatedPosition = position;
-    }
+    }*/
 }

@@ -6,6 +6,8 @@ import android.app.Activity;
 
 import android.view.MenuItem;
 
+import com.networksaremadeofstring.anonionooid.API.Ooo;
+
 
 /**
  * An activity representing a single Relay detail screen. This
@@ -19,12 +21,22 @@ import android.view.MenuItem;
 public class RelayDetailActivity extends Activity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_relay_detail);
 
         // Show the Up button in the action bar.
         getActionBar().setDisplayHomeAsUpEnabled(true);
+
+        try
+        {
+            getActionBar().setSubtitle(getIntent().getStringExtra(Ooo.ARG_ITEM_ID));
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
 
         // savedInstanceState is non-null when there is fragment state
         // saved from previous configurations of this activity
@@ -35,12 +47,13 @@ public class RelayDetailActivity extends Activity {
         //
         // http://developer.android.com/guide/components/fragments.html
         //
-        if (savedInstanceState == null) {
+        if (savedInstanceState == null)
+        {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putString(RelayDetailFragment.ARG_ITEM_ID,
-                    getIntent().getStringExtra(RelayDetailFragment.ARG_ITEM_ID));
+            arguments.putString(Ooo.ARG_ITEM_ID, getIntent().getStringExtra(Ooo.ARG_ITEM_ID));
+
             RelayDetailFragment fragment = new RelayDetailFragment();
             fragment.setArguments(arguments);
             getFragmentManager().beginTransaction()
@@ -50,9 +63,11 @@ public class RelayDetailActivity extends Activity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         int id = item.getItemId();
-        if (id == android.R.id.home) {
+        if (id == android.R.id.home)
+        {
             // This ID represents the Home or Up button. In the case of this
             // activity, the Up button is shown. For
             // more details, see the Navigation pattern on Android Design:

@@ -3,5 +3,36 @@
 
     <string name="app_name">AnOnionooid</string>
     <string name="title_relay_detail">Relay Detail</string>
+    <string name="MainSubtitle">A TOR RELAY AND BRIDGE EXPLORER</string>
+    <string name="title_activity_relay_details_swipe">Relay Details</string>
 
+    <string name="title_section1">General</string>
+    <string name="title_section2">Details</string>
+    <string name="title_section3">Graphs</string>
+    <string name="hello_world">Hello world!</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="action_favorite">Favorite</string>
+
+    <!-- Swipe Details -->
+    <string name="nicknameTitle">nickname</string>
+    <string name="uptimeTitle">uptime</string>
+    <string name="runningTitle">running</string>
+    <string name="orAddressTitle">OR Address</string>
+    <string name="contactTitle">contact</string>
+
+    <string name="tapAuthority">Authority - if the router is a directory authority</string>
+    <string name="tapBadExit">BadExit - if the router is believed to be useless as an exit node (because its ISP censors it, because it is behind a restrictive proxy, or for some similar reason)</string>
+    <string name="tapBadDirectory">BadDirectory - if the router is believed to be useless as a directory cache (because its directory port isn\'t working, its bandwidth is always throttled, or for some similar reason)</string>
+    <string name="tapExit">Exit - if the router is more useful for building general-purpose exit circuits than for relay circuits. The path building algorithm uses this flag; see path-spec.txt</string>
+    <string name="tapFast">Fast - if the router is suitable for high-bandwidth circuits</string>
+    <string name="tapGuard">Guard - if the router is suitable for use as an entry guard</string>
+    <string name="tapHSDir">HSDir - if the router is considered a v2 hidden service directory</string>
+    <string name="tapNamed">Named - if the router\'s identity-nickname mapping is canonical and this authority binds names</string>
+    <string name="tapStable">Stable - if the router is suitable for long-lived circuits</string>
+    <string name="tapRunning">Running - if the router is currently usable</string>
+    <string name="tapUnnamed">Unnamed - if another router has bound the name used by this router, and this authority binds names</string>
+    <string name="tapValid">Valid - if the router has been \'validated\'</string>
+    <string name="tapV2Dir">V2Dir - if the router implements the v2 directory protocol</string>
+    <string name="tapContact">Long press to select then copy and paste</string>
 </resources>

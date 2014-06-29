@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 
-
+import com.networksaremadeofstring.anonionooid.API.Ooo;
 
 
 /**
@@ -33,8 +33,11 @@ public class RelayListActivity extends Activity
     private boolean mTwoPane;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
+        getActionBar().setIcon(R.drawable.ab_icon);
+        getActionBar().setSubtitle(R.string.MainSubtitle);
         setContentView(R.layout.activity_relay_list);
 
         if (findViewById(R.id.relay_detail_container) != null) {
@@ -46,9 +49,9 @@ public class RelayListActivity extends Activity
 
             // In two-pane mode, list items should be given the
             // 'activated' state when touched.
-            ((RelayListFragment) getFragmentManager()
+            /*((RelayListFragment) getFragmentManager()
                     .findFragmentById(R.id.relay_list))
-                    .setActivateOnItemClick(true);
+                    .setActivateOnItemClick(true);*/
         }
 
         // TODO: If exposing deep links into your app, handle intents here.
@@ -59,24 +62,28 @@ public class RelayListActivity extends Activity
      * indicating that the item with the given ID was selected.
      */
     @Override
-    public void onItemSelected(String id) {
+    public void onItemSelected(String id)
+    {
         if (mTwoPane) {
             // In two-pane mode, show the detail view in this activity by
             // adding or replacing the detail fragment using a
             // fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putString(RelayDetailFragment.ARG_ITEM_ID, id);
+            arguments.putString(Ooo.ARG_ITEM_ID, id);
             RelayDetailFragment fragment = new RelayDetailFragment();
             fragment.setArguments(arguments);
             getFragmentManager().beginTransaction()
                     .replace(R.id.relay_detail_container, fragment)
                     .commit();
 
-        } else {
+        }
+        else
+        {
             // In single-pane mode, simply start the detail activity
             // for the selected item ID.
-            Intent detailIntent = new Intent(this, RelayDetailActivity.class);
-            detailIntent.putExtra(RelayDetailFragment.ARG_ITEM_ID, id);
+            //Intent detailIntent = new Intent(this, RelayDetailActivity.class);
+            Intent detailIntent = new Intent(this, RelayDetailsSwipe.class);
+            detailIntent.putExtra(Ooo.ARG_ITEM_ID, id);
             startActivity(detailIntent);
         }
     }
