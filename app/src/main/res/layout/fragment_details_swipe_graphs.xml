@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent" android:layout_height="match_parent">
+    <LinearLayout android:id="@+id/graphContainer" android:orientation="vertical"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:minHeight="400dp"
+        android:padding="20dp"
+        android:dividerPadding="40dp">
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
-
-</RelativeLayout>
+</LinearLayout>
+</ScrollView>

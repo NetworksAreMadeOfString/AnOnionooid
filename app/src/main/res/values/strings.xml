@@ -35,4 +35,17 @@
     <string name="tapValid">Valid - if the router has been \'validated\'</string>
     <string name="tapV2Dir">V2Dir - if the router implements the v2 directory protocol</string>
     <string name="tapContact">Long press to select then copy and paste</string>
+
+    <string name="favResultAddSuccess">Relay added as a favourite!</string>
+    <string name="favResultAddFailure">There was an issue adding that relay as a favourite</string>
+    <string name="favResultRemoveSuccess">Relay removed from favourites!</string>
+    <string name="favResultRemoveFailure">There was an issue removing that relay as a favourite</string>
+
+    <string name="platformTitle">Platform</string>
+    <string name="countryTitle">Country</string>
+    <string name="asnTitle">AS Number &amp; Name</string>
+    <string name="bandwidthTitle">Advertised Bandwidth</string>
+    <string name="exitPolicyTitle">Exit Policy</string>
+    <string name="exitAccept">accept</string>
+    <string name="exitReject">reject</string>
 </resources>

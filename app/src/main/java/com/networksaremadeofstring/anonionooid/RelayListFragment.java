@@ -1,3 +1,21 @@
+/*
+* Copyright (C) 2014 - Gareth Llewellyn
+*
+* This file is part of AnOnionooid - https://networksaremadeofstring.com/anonionooid/
+*
+* This program is free software: you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT
+* ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+* FOR A PARTICULAR PURPOSE. See the GNU General Public License
+* for more details.
+*
+* You should have received a copy of the GNU General Public License along with
+* this program. If not, see <http://www.gnu.org/licenses/>
+*/
 package com.networksaremadeofstring.anonionooid;
 
 import android.app.Activity;
@@ -6,6 +24,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +40,10 @@ import com.networksaremadeofstring.anonionooid.API.Ooo;
 import com.networksaremadeofstring.anonionooid.API.Relay;
 import com.networksaremadeofstring.anonionooid.API.Relays;
 import com.networksaremadeofstring.anonionooid.Adapters.RelaysAdapater;
+import com.networksaremadeofstring.anonionooid.cache.LocalCache;
 import com.networksaremadeofstring.anonionooid.dummy.DummyContent;
+
+import java.util.List;
 
 /**
  * A list fragment representing a list of Relays. This fragment
@@ -34,7 +56,6 @@ import com.networksaremadeofstring.anonionooid.dummy.DummyContent;
  */
 public class RelayListFragment extends Fragment
 {
-
     private Ooo API;
     private RelaysAdapater relaysAdapater;
     private GridView gridView;
@@ -94,30 +115,34 @@ public class RelayListFragment extends Fragment
 
         API = new Ooo();
 
-
-        // TODO: replace with a real list adapter.
-        /*setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(
-                getActivity(),
-                android.R.layout.simple_list_item_activated_1,
-                android.R.id.text1,
-                DummyContent.ITEMS));*/
-
         //if(savedInstanceState == null)
         //{
             relaysAdapater = new RelaysAdapater(getActivity());
-            new AsyncTask<Void, Void, Relays>() {
+            new AsyncTask<Void, Void, Relays>()
+            {
                 @Override
-                protected Relays doInBackground(Void... params) {
-                    try {
-                        return API.getTopTen();
-                    } catch (Exception e) {
+                protected Relays doInBackground(Void... params)
+                {
+                    try
+                    {
+                        LocalCache lc = new LocalCache(getActivity());
+
+                        lc.open();
+                        Relays relays = API.getLanding(lc.getFavourites());
+                        lc.close();
+
+                        return relays;
+                    }
+                    catch (Exception e) {
                         e.printStackTrace();
                         return null;
                     }
                 }
 
                 @Override
-                protected void onPostExecute(Relays relays) {
+                protected void onPostExecute(Relays relays)
+                {
+                    Log.e("onPostExecute","onPostExecute");
                     relaysAdapater.updateRelayList(relays);
                     gridView.setAdapter(relaysAdapater);
                     gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -154,6 +179,15 @@ public class RelayListFragment extends Fragment
                 && savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
             setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION));
         }*/
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+
+        if(null != relaysAdapater)
+            relaysAdapater.notifyDataSetChanged();
     }
 
     @Override

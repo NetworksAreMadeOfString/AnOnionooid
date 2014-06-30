@@ -1,3 +1,21 @@
+/*
+* Copyright (C) 2014 - Gareth Llewellyn
+*
+* This file is part of AnOnionooid - https://networksaremadeofstring.com/anonionooid/
+*
+* This program is free software: you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT
+* ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+* FOR A PARTICULAR PURPOSE. See the GNU General Public License
+* for more details.
+*
+* You should have received a copy of the GNU General Public License along with
+* this program. If not, see <http://www.gnu.org/licenses/>
+*/
 package com.networksaremadeofstring.anonionooid;
 
 import android.app.Fragment;
@@ -16,11 +34,19 @@ import android.widget.Toast;
 
 import com.networksaremadeofstring.anonionooid.API.Ooo;
 import com.networksaremadeofstring.anonionooid.API.Relay;
+import com.networksaremadeofstring.anonionooid.cache.LocalCache;
+
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+import javax.xml.datatype.DatatypeConstants;
+import javax.xml.datatype.Duration;
 
 
 public class RelayGeneralDetailsFragment extends Fragment
 {
-    public static final String ARG_ITEM_ID = "item_id";
     Ooo API;
     TextView nickname,uptime,or_address,contact,running;
     View progressBar;
@@ -60,7 +86,37 @@ public class RelayGeneralDetailsFragment extends Fragment
             protected void onPostExecute(Relay relay)
             {
                 nickname.setText(relay.nickname);
-                uptime.setText(relay.last_restarted);
+
+                try
+                {
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date startTime = sdf.parse(relay.last_restarted);
+                    Date now = new Date();
+
+                    long diff = now.getTime() - startTime.getTime();
+                    String time = "";
+                    long x = diff / 1000;
+                    long seconds = x % 60;
+                    x /= 60;
+                    long minutes = x % 60;
+                    x /= 60;
+                    long hours = x % 24;
+                    x /= 24;
+                    long days = x;
+                    if(days > 1)
+                        time = Long.toString(days) + "days ";
+
+                    if(hours > 1)
+                        time += Long.toString(hours) + "hours ";
+
+                    time += Long.toString(minutes) + "mins ";
+
+                    uptime.setText(time);
+                }
+                catch (Exception e)
+                {
+                    uptime.setText(relay.last_restarted);
+                }
 
                 String addresses = "";
                 for(String address: relay.or_addresses)

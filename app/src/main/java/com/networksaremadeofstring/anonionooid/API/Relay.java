@@ -1,43 +1,43 @@
+/*
+* Copyright (C) 2014 - Gareth Llewellyn
+*
+* This file is part of AnOnionooid - https://networksaremadeofstring.com/anonionooid/
+*
+* This program is free software: you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT
+* ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+* FOR A PARTICULAR PURPOSE. See the GNU General Public License
+* for more details.
+*
+* You should have received a copy of the GNU General Public License along with
+* this program. If not, see <http://www.gnu.org/licenses/>
+*/
 package com.networksaremadeofstring.anonionooid.API;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
-/**
- {
- "nickname": "TorLand1",
- "fingerprint": "E1E922A20AF608728824A620BADC6EFC8CB8C2B8",
- "or_addresses": [
- "37.130.227.133:443",
- "[2a02:2498:e001:3c::133]:443"
- ],
- "dir_address": "37.130.227.133:80",
- "running": true,
- "flags": [
- "Exit",
- "Fast",
- "HSDir",
- "Running",
- "Unnamed",
- "V2Dir",
- "Valid"
- ],
- "country": "gb",
- "last_restarted": "2014-06-05 20:17:37",
- "advertised_bandwidth": 49453858
- }
- */
 public class Relay
 {
-    public String Fingerprint = "";
+    public String Fingerprint = "xyz";
     public String nickname = "";
     public String[] or_addresses = null;
     public String dir_address = null;
     public boolean running = false;
     public RelayFlags flags = null;
     public String country = "";
+    public String countryName = "";
     public String last_restarted = "";
     public int advertised_bandwidth = 0;
     public String contact;
+    public String platform;
+    public String asn;
+    public String asnName;
+    public String[] exitPolicy = null;
 
     public Relay () { }
 
@@ -151,6 +151,75 @@ public class Relay
         catch (Exception e)
         {
             advertised_bandwidth = 0;
+        }
+
+        try
+        {
+            if (json.has("country"))
+                country = json.getString("country");
+        }
+        catch (Exception e)
+        {
+            country = "UNKNOWN";
+        }
+
+        try
+        {
+            if (json.has("country_name"))
+                countryName = json.getString("country_name");
+        }
+        catch (Exception e)
+        {
+            countryName = "UNKNOWN";
+        }
+
+        try
+        {
+            if (json.has("as_number"))
+                asn = json.getString("as_number");
+        }
+        catch (Exception e)
+        {
+            asn = "UNKNOWN";
+        }
+
+        try
+        {
+            if (json.has("as_name"))
+                asnName = json.getString("as_name");
+        }
+        catch (Exception e)
+        {
+            asnName = "UNKNOWN";
+        }
+
+        try
+        {
+            if (json.has("platform"))
+                platform = json.getString("platform");
+        }
+        catch (Exception e)
+        {
+            platform = "UNKNOWN";
+        }
+
+        try
+        {
+            if (json.has("exit_policy"))
+            {
+                JSONArray exitPolicyJSON = json.getJSONArray("exit_policy");
+                int count = exitPolicyJSON.length();
+
+                exitPolicy = new String[count];
+                for (int i = 0; i < count; i++)
+                {
+                    exitPolicy[i] = exitPolicyJSON.getString(i);
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            exitPolicy = null;
         }
     }
 }

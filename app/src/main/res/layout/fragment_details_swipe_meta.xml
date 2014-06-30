@@ -1,6 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
+    <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:minHeight="900dp">
 
-</RelativeLayout>
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/platformTitle"
+            android:id="@+id/platformTitle"
+            android:fontFamily="sans-serif-thin"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/platformTV"
+            android:layout_below="@+id/platformTitle"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="@dimen/swipe_details_left_margin"
+            android:paddingBottom="@dimen/swipe_details_bottom_padding" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/countryTitle"
+            android:fontFamily="sans-serif-thin"
+            android:id="@+id/countryTitle"
+            android:layout_below="@+id/platformTV"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/countryTV"
+            android:layout_below="@+id/countryTitle"
+            android:paddingLeft="@dimen/swipe_details_left_margin"
+            android:paddingBottom="@dimen/swipe_details_bottom_padding"
+            android:singleLine="false" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/asnTitle"
+            android:id="@+id/asnTitle"
+            android:fontFamily="sans-serif-thin"
+            android:layout_below="@+id/countryTV"
+            android:layout_alignLeft="@+id/countryTV"
+            android:layout_alignStart="@+id/countryTV" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/asnTV"
+            android:layout_below="@+id/asnTitle"
+            android:layout_alignLeft="@+id/asnTitle"
+            android:layout_alignStart="@+id/asnTitle"
+            android:paddingLeft="@dimen/swipe_details_left_margin"
+            android:paddingBottom="@dimen/swipe_details_bottom_padding" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/bandwidthTitle"
+            android:id="@+id/bandwidthTitle"
+            android:fontFamily="sans-serif-thin"
+            android:layout_below="@+id/asnTV"
+            android:layout_alignLeft="@+id/asnTV"
+            android:layout_alignStart="@+id/asnTV" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/bandwidthTV"
+            android:layout_below="@+id/bandwidthTitle"
+            android:layout_alignLeft="@+id/bandwidthTitle"
+            android:layout_alignStart="@+id/bandwidthTitle"
+            android:paddingLeft="@dimen/swipe_details_left_margin"
+            android:paddingBottom="@dimen/swipe_details_bottom_padding" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/exitPolicyTitle"
+            android:id="@+id/exitPolicyTitle"
+            android:fontFamily="sans-serif-thin"
+            android:layout_below="@+id/bandwidthTV"
+            android:layout_alignLeft="@+id/bandwidthTV"
+            android:layout_alignStart="@+id/bandwidthTV" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/exitAccept"
+            android:fontFamily="sans-serif-condensed"
+            android:id="@+id/exitPolicyStatement"
+            android:layout_alignBottom="@+id/exitPolicyTitle"
+            android:layout_toRightOf="@+id/exitPolicyTitle"
+            android:paddingLeft="20dp"
+            android:textColor="@color/torGreen" />
+
+        <TableLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@+id/exitPolicyTitle"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/exitPolicyTable"
+            android:layout_marginLeft="20dp"></TableLayout>
+
+    </RelativeLayout>
+</ScrollView>

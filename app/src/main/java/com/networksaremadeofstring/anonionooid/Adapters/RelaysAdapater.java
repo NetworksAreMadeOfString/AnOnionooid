@@ -1,3 +1,22 @@
+/*
+* Copyright (C) 2014 - Gareth Llewellyn
+*
+* This file is part of AnOnionooid - https://networksaremadeofstring.com/anonionooid/
+*
+* This program is free software: you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT
+* ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+* FOR A PARTICULAR PURPOSE. See the GNU General Public License
+* for more details.
+*
+* You should have received a copy of the GNU General Public License along with
+* this program. If not, see <http://www.gnu.org/licenses/>
+*/
+
 package com.networksaremadeofstring.anonionooid.Adapters;
 
 import android.content.Context;
@@ -12,24 +31,42 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.networksaremadeofstring.anonionooid.API.Ooo;
 import com.networksaremadeofstring.anonionooid.API.Relay;
 import com.networksaremadeofstring.anonionooid.API.Relays;
 import com.networksaremadeofstring.anonionooid.R;
+import com.networksaremadeofstring.anonionooid.cache.LocalCache;
+
+import java.util.List;
 
 public class RelaysAdapater extends BaseAdapter
 {
     public Relays relayList = null;
     private Context mContext;
-
+    private LocalCache lc;
+    List<String> favFingerprints;
     public RelaysAdapater(Context context, Relays results)
     {
         mContext = context;
         relayList = results;
+        refreshFavourites();
     }
 
     public RelaysAdapater(Context context)
     {
         mContext = context;
+        refreshFavourites();
+    }
+
+    public void refreshFavourites()
+    {
+        if(null == lc)
+            lc = new LocalCache(mContext);
+
+        /*lc.open();
+        favFingerprints = lc.getFavourites();
+        lc.close();
+        this.notifyDataSetChanged();*/
     }
 
     public void updateRelayList(Relays relays)
@@ -72,14 +109,51 @@ public class RelaysAdapater extends BaseAdapter
         if(null != relay)
         {
             String fing = "";
-            fing = relay.Fingerprint.substring(0,10) + "\n";
-            fing += relay.Fingerprint.substring(10,20)  + "\n";
-            fing += relay.Fingerprint.substring(20,30)  + "\n";
-            fing += relay.Fingerprint.substring(30);
+            try
+            {
+                fing = relay.Fingerprint.substring(0, 10) + "\n";
+                fing += relay.Fingerprint.substring(10, 20) + "\n";
+                fing += relay.Fingerprint.substring(20, 30) + "\n";
+                fing += relay.Fingerprint.substring(30);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+                fing = "Unknown Fingerprint";
+            }
+
+            lc.open();
+            if(lc.isAFavourite(relay.Fingerprint))
+            {
+                convertView.findViewById(R.id.favIcon).setVisibility(View.VISIBLE);
+            }
+            else
+            {
+                convertView.findViewById(R.id.favIcon).setVisibility(View.GONE);
+            }
+            lc.close();
 
             ((TextView) convertView.findViewById(R.id.fingerprintTV)).setText(fing);
-            ((TextView) convertView.findViewById(R.id.nicknameTV)).setText(relay.nickname);
-            ((TextView) convertView.findViewById(R.id.oraddressTV)).setText(relay.or_addresses[0]);
+
+            try
+            {
+                ((TextView) convertView.findViewById(R.id.nicknameTV)).setText(relay.nickname);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+                ((TextView) convertView.findViewById(R.id.nicknameTV)).setText("????");
+            }
+
+            try
+            {
+                ((TextView) convertView.findViewById(R.id.oraddressTV)).setText(relay.or_addresses[0]);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+                ((TextView) convertView.findViewById(R.id.oraddressTV)).setText("0.0.0.0:0");
+            }
 
             if(relay.flags.Authority)
             {
