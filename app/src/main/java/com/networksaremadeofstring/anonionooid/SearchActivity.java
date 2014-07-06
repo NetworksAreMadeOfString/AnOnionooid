@@ -18,13 +18,15 @@
 */
 package com.networksaremadeofstring.anonionooid;
 
+import android.app.Activity;
+import android.app.Fragment;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Activity;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.widget.FrameLayout;
 import android.widget.SearchView;
 
 import com.networksaremadeofstring.anonionooid.API.Ooo;
@@ -34,26 +36,27 @@ import com.networksaremadeofstring.anonionooid.API.Ooo;
  * An activity representing a list of Relays. This activity
  * has different presentations for handset and tablet-size devices. On
  * handsets, the activity presents a list of items, which when touched,
- * lead to a {@link RelayDetailActivity} representing
+ * lead to a {@link com.networksaremadeofstring.anonionooid.RelayDetailActivity} representing
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
  * <p>
  * The activity makes heavy use of fragments. The list of items is a
- * {@link RelayListFragment} and the item details
- * (if present) is a {@link RelayDetailFragment}.
+ * {@link com.networksaremadeofstring.anonionooid.RelayListFragment} and the item details
+ * (if present) is a {@link com.networksaremadeofstring.anonionooid.RelayDetailFragment}.
  * <p>
  * This activity also implements the required
- * {@link RelayListFragment.Callbacks} interface
+ * {@link com.networksaremadeofstring.anonionooid.RelayListFragment.Callbacks} interface
  * to listen for item selections.
  */
-public class RelayListActivity extends Activity
-        implements RelayListFragment.Callbacks {
+public class SearchActivity extends Activity implements RelayListFragment.Callbacks
+{
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
      */
     private boolean mTwoPane;
+    private String searchTerm = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -61,27 +64,42 @@ public class RelayListActivity extends Activity
         super.onCreate(savedInstanceState);
         getActionBar().setIcon(R.drawable.ab_icon);
         getActionBar().setSubtitle(R.string.MainSubtitle);
-        setContentView(R.layout.activity_relay_list);
+        //setContentView(R.layout.activity_relay_list);
+        setContentView(R.layout.activity_search);
 
-        if (findViewById(R.id.relay_detail_container) != null) {
-            // The detail container view will be present only in the
-            // large-screen layouts (res/values-large and
-            // res/values-sw600dp). If this view is present, then the
-            // activity should be in two-pane mode.
+        handleIntent(getIntent());
+
+        Fragment listFragment = new RelayListFragment();
+        Bundle searchTermBundle = new Bundle();
+        searchTermBundle.putString(Ooo.ARG_SEARCH,searchTerm);
+        listFragment.setArguments(searchTermBundle);
+        getFragmentManager().beginTransaction()
+                .add(R.id.fragmentHolder, listFragment)
+                .commit();
+
+        /*if (findViewById(R.id.relay_detail_container) != null)
+        {
             mTwoPane = true;
+        }*/
 
-            // In two-pane mode, list items should be given the
-            // 'activated' state when touched.
-            /*((RelayListFragment) getFragmentManager()
-                    .findFragmentById(R.id.relay_list))
-                    .setActivateOnItemClick(true);*/
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent)
+    {
+        handleIntent(intent);
+    }
+
+    private void handleIntent(Intent intent) {
+
+        if (Intent.ACTION_SEARCH.equals(intent.getAction()))
+        {
+            searchTerm = intent.getStringExtra(SearchManager.QUERY);
         }
-
-        // TODO: If exposing deep links into your app, handle intents here.
     }
 
     /**
-     * Callback method from {@link RelayListFragment.Callbacks}
+     * Callback method from {@link com.networksaremadeofstring.anonionooid.RelayListFragment.Callbacks}
      * indicating that the item with the given ID was selected.
      */
     @Override
@@ -111,7 +129,7 @@ public class RelayListActivity extends Activity
         }
     }
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
         MenuInflater inflater = getMenuInflater();
@@ -125,5 +143,5 @@ public class RelayListActivity extends Activity
                 searchManager.getSearchableInfo(getComponentName()));
 
         return true;
-    }
+    }*/
 }

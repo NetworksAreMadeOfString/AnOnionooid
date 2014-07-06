@@ -28,6 +28,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +38,7 @@ public class Ooo
     public static final String ARG_ITEM_ID = "probe_fingerprint";
     public static final String ARG_relay_fingerprint = "relay_fingerprint";
     public static final String ARG_relay_nickname = "relay_nickname";
+    public static final String ARG_SEARCH = "search_term";
 
     public Relays getLanding(List<String> favourites)
     {
@@ -106,6 +108,32 @@ public class Ooo
         }
 
         return topTen;
+    }
+
+    public Relays search(String searchTerm) throws JSONException, IOException
+    {
+        Relays searchResults;
+
+        try
+        {
+
+            JSONObject jsonObject = OooRequest("https://onionoo.torproject.org/details?limit=50&search="+ URLEncoder.encode(searchTerm)+"&fields=fingerprint,nickname,advertised_bandwidth,last_restarted,country,flags,or_addresses,dir_address,running,hashed_fingerprint");
+
+            if(null == jsonObject)
+            {
+                searchResults = new Relays();
+            }
+            else
+            {
+                searchResults = new Relays(jsonObject);
+            }
+        }
+        catch(Exception e)
+        {
+            searchResults = new Relays();
+        }
+
+        return searchResults;
     }
 
     public Relay getRelayGeneral(String fingerprint)

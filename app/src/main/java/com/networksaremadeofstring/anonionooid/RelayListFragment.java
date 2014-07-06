@@ -85,9 +85,6 @@ public class RelayListFragment extends Fragment
      */
     public interface Callbacks
     {
-        /**
-         * Callback for when an item has been selected.
-         */
         public void onItemSelected(String id);
     }
 
@@ -128,7 +125,16 @@ public class RelayListFragment extends Fragment
                         LocalCache lc = new LocalCache(getActivity());
 
                         lc.open();
-                        Relays relays = API.getLanding(lc.getFavourites());
+                        Relays relays;
+
+                        if(null == getArguments() || getArguments().getString(Ooo.ARG_SEARCH,"").equals(""))
+                        {
+                            relays = API.getLanding(lc.getFavourites());
+                        }
+                        else
+                        {
+                            relays = API.search(getArguments().getString(Ooo.ARG_SEARCH,"NAMOS"));
+                        }
                         lc.close();
 
                         return relays;

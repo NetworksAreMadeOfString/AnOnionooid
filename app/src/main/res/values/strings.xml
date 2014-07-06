@@ -5,6 +5,7 @@
     <string name="title_relay_detail">Relay Detail</string>
     <string name="MainSubtitle">A TOR RELAY AND BRIDGE EXPLORER</string>
     <string name="title_activity_relay_details_swipe">Relay Details</string>
+    <string name="search">Search for a Relay</string>
 
     <string name="title_section1">General</string>
     <string name="title_section2">Details</string>
