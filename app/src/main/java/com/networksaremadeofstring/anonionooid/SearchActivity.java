@@ -71,7 +71,7 @@ public class SearchActivity extends Activity implements RelayListFragment.Callba
 
         Fragment listFragment = new RelayListFragment();
         Bundle searchTermBundle = new Bundle();
-        searchTermBundle.putString(Ooo.ARG_SEARCH,searchTerm);
+        searchTermBundle.putString(Ooo.ARG_SEARCH,searchTerm.trim());
         listFragment.setArguments(searchTermBundle);
         getFragmentManager().beginTransaction()
                 .add(R.id.fragmentHolder, listFragment)
